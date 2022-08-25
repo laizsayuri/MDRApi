@@ -88,5 +88,47 @@
 
             return adquirenteC;
         }
+
+        public ResultadoTransacao CalcTransaction(Transacao transacao)
+        {
+            Adquirente adquirente = new Adquirente();
+            Taxa taxa = new Taxa();
+            float desconto = 0;
+
+            switch (transacao.Adquirente.ToLower())
+            {
+                case "a":
+                    adquirente = GetAdquirenteA();
+                    break;
+                case "b":
+                    adquirente = GetAdquirenteB();
+                    break;
+                case "c":
+                    adquirente = GetAdquirenteC();
+                    break;
+            }
+
+            switch (transacao.Bandeira.ToLower())
+            {
+                case "visa":
+                    taxa = adquirente.Taxas[0];
+                    break;
+                case "master":
+                    taxa = adquirente.Taxas[1];
+                    break;
+            }
+
+            switch (transacao.Tipo.ToLower())
+            {
+                case "credito":
+                    desconto = taxa.Credito;
+                    break;
+                case "debito":
+                    desconto = taxa.Debito;
+                    break;
+            }
+
+            return new ResultadoTransacao(transacao.Valor - (desconto/100) * transacao.Valor);
+        }
     }
 }

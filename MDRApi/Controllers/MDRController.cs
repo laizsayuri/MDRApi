@@ -23,7 +23,8 @@ namespace MDRApi.Controllers
         [HttpPost("transaction")]
         public IActionResult PostMDR([FromBody] Transacao transacao)
         {
-            return Ok();
+            ResultadoTransacao result = _mdrService.CalcTransaction(transacao);
+            return Ok(result);
         }
                 
     }
