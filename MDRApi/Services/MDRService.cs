@@ -106,6 +106,8 @@
                 case "c":
                     adquirente = GetAdquirenteC();
                     break;
+                default:
+                    throw new Exception("Adquirente " + transacao.Adquirente + " inválido");                   
             }
 
             switch (transacao.Bandeira.ToLower())
@@ -116,6 +118,8 @@
                 case "master":
                     taxa = adquirente.Taxas[1];
                     break;
+                default:
+                    throw new Exception("Bandeira " + transacao.Bandeira + " inválido");
             }
 
             switch (transacao.Tipo.ToLower())
@@ -126,9 +130,12 @@
                 case "debito":
                     desconto = taxa.Debito;
                     break;
+                default:
+                    throw new Exception("Tipo " + transacao.Tipo + " inválido");
             }
 
-            return new ResultadoTransacao(transacao.Valor - (desconto/100) * transacao.Valor);
+            float valorLiquido = transacao.Valor - ((desconto / 100) * transacao.Valor);
+            return new ResultadoTransacao(valorLiquido);
         }
     }
 }
