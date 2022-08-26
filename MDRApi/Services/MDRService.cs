@@ -1,10 +1,12 @@
-﻿namespace MDRApi.Services
+﻿using MDRApi.Models;
+
+namespace MDRApi.Services
 {
     public class MDRService
     {
-        public List<Adquirente> GetMDRList()
+        public List<AdquirenteModel> GetMDRList()
         {
-            List<Adquirente> list = new List<Adquirente>()
+            List<AdquirenteModel> list = new List<AdquirenteModel>()
             {
                 GetAdquirenteA(),
                 GetAdquirenteB(),
@@ -14,20 +16,20 @@
             return list;
         }
 
-        public Adquirente GetAdquirenteA()
+        public AdquirenteModel GetAdquirenteA()
         {
-            Adquirente adquirenteA = new Adquirente()
+            AdquirenteModel adquirenteA = new AdquirenteModel()
             {
-                Nome = "Adquirente A",
-                Taxas = new List<Taxa>()
+                Adquirente = "Adquirente A",
+                Taxas = new List<TaxaModel>()
                 {
-                   new Taxa()
+                   new TaxaModel()
                    {
                        Bandeira = "Visa",
                        Credito = 2.25f,
                        Debito = 2.00f
                    },
-                   new Taxa()
+                   new TaxaModel()
                    {
                        Bandeira = "Master",
                        Credito = 2.35f,
@@ -39,20 +41,20 @@
             return adquirenteA;
         }
 
-        public Adquirente GetAdquirenteB()
+        public AdquirenteModel GetAdquirenteB()
         {
-            Adquirente adquirenteB = new Adquirente()
+            AdquirenteModel adquirenteB = new AdquirenteModel()
             {
-                Nome = "Adquirente B",
-                Taxas = new List<Taxa>()
+                Adquirente = "Adquirente B",
+                Taxas = new List<TaxaModel>()
                 {
-                   new Taxa()
+                   new TaxaModel()
                    {
                        Bandeira = "Visa",
                        Credito = 2.50f,
                        Debito = 2.08f
                    },
-                   new Taxa()
+                   new TaxaModel()
                    {
                        Bandeira = "Master",
                        Credito = 2.65f,
@@ -64,20 +66,20 @@
             return adquirenteB;
         }
 
-        public Adquirente GetAdquirenteC()
+        public AdquirenteModel GetAdquirenteC()
         {
-            Adquirente adquirenteC = new Adquirente()
+            AdquirenteModel adquirenteC = new AdquirenteModel()
             {
-                Nome = "Adquirente C",
-                Taxas = new List<Taxa>()
+                Adquirente = "Adquirente C",
+                Taxas = new List<TaxaModel>()
                 {
-                   new Taxa()
+                   new TaxaModel()
                    {
                        Bandeira = "Visa",
                        Credito = 2.75f,
                        Debito = 2.16f
                    },
-                   new Taxa()
+                   new TaxaModel()
                    {
                        Bandeira = "Master",
                        Credito = 3.10f,
@@ -89,10 +91,10 @@
             return adquirenteC;
         }
 
-        public ResultadoTransacao CalcTransaction(Transacao transacao)
+        public ResultadoTransacaoModel CalcTransaction(TransacaoModel transacao)
         {
-            Adquirente adquirente = new Adquirente();
-            Taxa taxa = new Taxa();
+            AdquirenteModel adquirente = new AdquirenteModel();
+            TaxaModel taxa = new TaxaModel();
             float desconto = 0;
 
             switch (transacao.Adquirente.ToLower())
@@ -135,7 +137,7 @@
             }
 
             float valorLiquido = transacao.Valor - ((desconto / 100) * transacao.Valor);
-            return new ResultadoTransacao(valorLiquido);
+            return new ResultadoTransacaoModel(valorLiquido);
         }
     }
 }

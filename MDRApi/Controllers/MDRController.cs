@@ -1,4 +1,5 @@
-﻿using MDRApi.Services;
+﻿using MDRApi.Models;
+using MDRApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MDRApi.Controllers
@@ -14,18 +15,20 @@ namespace MDRApi.Controllers
         }
 
         [HttpGet("mdr")]
+        [Produces(typeof(List<AdquirenteModel>))]
         public IActionResult GetMDR()
         {   
-            List<Adquirente> list = _mdrService.GetMDRList();
+            List<AdquirenteModel> list = _mdrService.GetMDRList();
             return Ok(list);
         }
 
         [HttpPost("transaction")]
-        public IActionResult PostMDR([FromBody] Transacao transacao)
+        [Produces(typeof(ResultadoTransacaoModel))]
+        public IActionResult PostMDR([FromBody] TransacaoModel transacao)
         {
             try
             {
-                ResultadoTransacao result = _mdrService.CalcTransaction(transacao);
+                ResultadoTransacaoModel result = _mdrService.CalcTransaction(transacao);
                 return Ok(result);
             }
             catch(Exception erro)

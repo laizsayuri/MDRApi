@@ -1,6 +1,6 @@
-﻿namespace MDRApi
+﻿namespace MDRApi.Models
 {
-    public class Transacao
+    public class TransacaoModel
     {
         public float Valor { get; set; }
         public string Adquirente { get; set; }
